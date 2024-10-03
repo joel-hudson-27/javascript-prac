@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+</body>
+
+<style>
+    .trail {
+        /* className for the trail elements */
+        position: absolute;
+        height: 6px;
+        width: 6px;
+        border-radius: 3px;
+        background: teal;
+    }
+</style>
+
+<script>
+    let scheduled = null;
+    function initDivTrail() {
+        const newDiv = document.createElement("div");
+        newDiv.classList.add("trail");
+        return newDiv;
+    }
+
+    function updateDivTrails(parentNode, mouseX, mouseY) {
+        const trailDivs = parentNode.querySelectorAll(".trail");
+
+        //remove the last trailing div if the list is not empty
+        //for uniform length
+        if(trailDivs.length > 0) {
+        parentNode.removeChild(trailDivs[trailDivs.length - 1]);
+        }
+
+        //create and insert a new div at the current tracked
+        //mouse location
+        const newTrailDiv = initDivTrail();
+        newTrailDiv.style.left = mouseX + "px";
+        newTrailDiv.style.top = mouseY + "px";
+        parentNode.insertBefore(newTrailDiv, trailDivs[0]);
+    }
+
+    function mouseMovement(parentNode, event) {
+
+        //get the current position of the mouse
+        const x = event.clientX;
+        const y = event.clientY;
+
+        //update a new mouse position every 10ms
+        if (!scheduled) {
+            setTimeout(() => {
+                updateDivTrails(parentNode, x, y);
+                scheduled = null;
+            }, 10);
+        }
+        scheduled = event;
+    }
+
+    for (var i = 0; i < 30; i++) {
+        document.body.appendChild(initDivTrail(document.body));
+    }
+    window.addEventListener("mousemove", function(event){
+        mouseMovement(document.body, event);
+    });
+</script>
+
+</html>

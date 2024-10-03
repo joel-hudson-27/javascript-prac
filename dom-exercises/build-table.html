@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Mountains</h1>
+
+    <div id="mountains"></div>
+
+    <script>
+        const MOUNTAINS = [
+            { name: "Kilimanjaro", height: 5895, place: "Tanzania" },
+            { name: "Everest", height: 8848, place: "Nepal" },
+            { name: "Mount Fuji", height: 3776, place: "Japan" },
+            { name: "Vaalserberg", height: 323, place: "Netherlands" },
+            { name: "Denali", height: 6168, place: "United States" },
+            { name: "Popocatepetl", height: 5465, place: "Mexico" },
+            { name: "Mont Blanc", height: 4808, place: "Italy/France" }
+        ];
+
+        function addHeader(inputObjectFirstRow) {
+            let headerRow = document.createElement("tr");
+            for (item in inputObjectFirstRow) {
+                let newColumn = document.createElement("th");
+                newColumn.textContent = item;
+                headerRow.appendChild(newColumn);
+            }
+            return headerRow;
+        }
+
+        function addRow(inputObject) {
+            let newRow = document.createElement("tr");
+            for (column in inputObject) {
+                let newColumn = document.createElement("td");
+                newColumn.textContent = inputObject[column];
+                newRow.appendChild(newColumn);
+            }
+            
+            return newRow;
+        }
+
+        function makeTable(parentNode, inputObject) {
+            newTable = document.createElement("table");
+            newTable.appendChild(addHeader(inputObject[0]));
+            inputObject.forEach(function (row) {
+                newTable.appendChild(addRow(row));
+            });
+
+            let dataFields = newTable.querySelectorAll("td");
+            console.log(dataFields);
+            dataFields.forEach(function (field) {
+                if(!isNaN(field.textContent)) {
+                    field.style.textAlign = "right";
+                }
+            });
+
+            parentNode.appendChild(newTable);
+            return parentNode;
+        }
+
+        let pa = document.querySelector("#mountains");
+        parentNode = makeTable(pa, MOUNTAINS);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p class="balloon" style="font-size: 12px;">🎈</p>
+    
+</body>
+<script>
+    var balloon = document.querySelector("p");
+
+    function incSize(elm) {
+        let size = parseFloat(elm.style.fontSize);
+        console.log(size);
+        size *= 1.1;
+        elm.style.fontSize = size + "px";
+        return elm;
+    }
+
+    function decSize(elm) {
+        let size = parseFloat(elm.style.fontSize);
+        size *= 0.9;
+        elm.style.fontSize = size + "px";
+        return elm;
+    }
+
+    window.addEventListener("keyup", function (event) {
+        if (event.key === "ArrowUp") {
+            incSize(balloon);
+        }
+        else if (event.key === "ArrowDown") {
+            decSize(balloon);
+        }
+    });
+
+
+
+</script>
+
+</html>

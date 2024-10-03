@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <tab-panel>
+        <div data-tabname="one">Tab one</div>
+        <div data-tabname="two">Tab two</div>
+        <div data-tabname="three">Tab three</div>
+    </tab-panel>
+</body>
+<script>
+    let currTab = null;
+    function asTabs(node) {
+        const numTabs = node.children.length;
+        const tabDivs = node.querySelectorAll("div");
+        for (var i = numTabs - 1; i >= 0; i--) {
+            const newTab = document.createElement("button");
+            const tabName = tabDivs[i].getAttribute("data-tabname");
+            newTab.textContent = tabName;
+            newTab.classList.add("tab-button");
+            newTab.id = tabName;
+            node.insertBefore(newTab, node.firstChild);
+            newTab.addEventListener("click", function (event) {
+                toggleTabVisibility(node, event);
+            });
+        }
+    }
+
+    function updateTabs() {
+
+    }
+
+    function toggleTabVisibility(tabsContainer, event) {
+
+        const tabContent = tabsContainer.querySelectorAll("div");
+        const numTabs = tabContent.length;
+        const isExitClick = (currTab === event.target.id);
+
+        if(isExitClick){
+            for (let i = 0; i < numTabs; i++) {
+                tabContent[i].style.display = "block";
+            }
+            currTab = null;
+            return;
+        }
+
+        //iterate over the content tabs
+        for (let i = 0; i < numTabs; i++) {
+            const whichTab = tabContent[i];
+            const tabName = whichTab.getAttribute("data-tabname");
+            const isPressedTab = (tabName === event.target.id);
+            
+            if(isPressedTab){
+                whichTab.style.display = "block";
+                currTab = tabName;
+            }
+            else {
+                whichTab.style.display = "none";
+            }
+        }
+    }
+    tabPanel = document.querySelector("tab-panel");
+    asTabs(tabPanel);
+
+</script>
+
+</html>
